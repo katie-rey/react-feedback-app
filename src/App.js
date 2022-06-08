@@ -11,6 +11,7 @@ import AboutPage from './pages/AboutPage'
 import AboutIconLink from './components/AboutIconLink'
 import Card from './components/shared/Card'
 import Post from './components/Post'
+import { FeedbackProvider } from './context/FeedbackContext'
 
 export default function App() {
   const [feedback, setFeedback] = useState(FeedbackData)
@@ -29,35 +30,37 @@ export default function App() {
 
   console.log(feedback)
   return (
-    <Router>
-      <Header />
-      <div className="container">
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-              </>
-            }
-          ></Route>
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/post:id/:name" element={<Post />} />
-        </Routes>
+    <FeedbackProvider>
+      <Router>
+        <Header />
+        <div className="container">
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <FeedbackForm handleAdd={addFeedback} />
+                  <FeedbackStats />
+                  <FeedbackList handleDelete={deleteFeedback} />
+                </>
+              }
+            ></Route>
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/post:id/:name" element={<Post />} />
+          </Routes>
 
-        <Card>
-          <NavLink to="/" activeClassName="active">
-            Home
-          </NavLink>
-          <NavLink to="/about" activeClassName="active">
-            About
-          </NavLink>
-        </Card>
-        <AboutIconLink />
-      </div>
-    </Router>
+          <Card>
+            <NavLink to="/" activeClassName="active">
+              Home
+            </NavLink>
+            <NavLink to="/about" activeClassName="active">
+              About
+            </NavLink>
+          </Card>
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   )
 }
