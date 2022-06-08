@@ -9,7 +9,7 @@ function Header({ text, bgColor, textColor }) {
   return (
     <>
       <header style={headerStyles}>
-        <div className="container">Header</div>
+        <div className="container">Feedback App</div>
       </header>
     </>
   )
