@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import Card from './Card'
 import Button from './Button'
 import RatingSelect from './../RatingSelect'
-
+import FeedbackContext from '../../context/FeedbackContext'
 import { FaTerminal } from 'react-icons/fa'
 
 function FeedbackForm({ handleAdd }) {
@@ -11,6 +11,8 @@ function FeedbackForm({ handleAdd }) {
   const [rating, setRating] = useState('')
   const [btnDisabled, setBtnDisabled] = useState(true)
   const [message, setMessage] = useState('')
+
+  const { addFeedback } = useContext(FeedbackContext)
 
   //from validation
   const handleTextChange = (e) => {
@@ -34,7 +36,7 @@ function FeedbackForm({ handleAdd }) {
         text,
         rating,
       }
-      handleAdd(newFeedback)
+      addFeedback(newFeedback)
       setText('')
     }
   }
