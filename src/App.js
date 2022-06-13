@@ -32,14 +32,14 @@ export default function App() {
             <Route path="/post:id/:name" element={<Post />} />
           </Routes>
 
-          <Card>
+          {/* <Card>
             <NavLink to="/" activeClassName="active">
               Home
             </NavLink>
             <NavLink to="/about" activeClassName="active">
               About
             </NavLink>
-          </Card>
+          </Card> */}
           <AboutIconLink />
         </div>
       </Router>

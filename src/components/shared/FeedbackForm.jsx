@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import Card from './Card'
 import Button from './Button'
 import RatingSelect from './../RatingSelect'
 import FeedbackContext from '../../context/FeedbackContext'
-import { FaTerminal } from 'react-icons/fa'
+// import { FaTerminal } from 'react-icons/fa'
 
 function FeedbackForm({ handleAdd }) {
   const [text, setText] = useState('')
@@ -12,7 +12,15 @@ function FeedbackForm({ handleAdd }) {
   const [btnDisabled, setBtnDisabled] = useState(true)
   const [message, setMessage] = useState('')
 
-  const { addFeedback } = useContext(FeedbackContext)
+  const { addFeedback, feedbackEdit, updateFeedback } = useContext(FeedbackContext)
+
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setBtnDisabled(false)
+      setText(feedbackEdit.item.text)
+      setRating(feedbackEdit.item.rating)
+    }
+  }, [feedbackEdit])
 
   //from validation
   const handleTextChange = (e) => {
@@ -36,7 +44,11 @@ function FeedbackForm({ handleAdd }) {
         text,
         rating,
       }
-      addFeedback(newFeedback)
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback)
+      } else {
+        addFeedback(newFeedback)
+      }
       setText('')
     }
   }
